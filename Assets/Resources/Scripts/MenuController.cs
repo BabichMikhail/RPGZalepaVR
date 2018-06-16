@@ -7,7 +7,6 @@ public class MenuController : MonoBehaviour
 {
     public void OnRestart()
     {
-        Debug.Log("Hello world");
         SceneManager.LoadScene("Main");
     }
 

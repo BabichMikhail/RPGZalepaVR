@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VRTK; 
+using UnityEngine.SceneManagement;
+using VRTK;
 
 public class GameStateController : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class GameStateController : MonoBehaviour
     void Update ()
     {
         Music.Instance.Update();
+        if (Health <= 0)
+            SceneManager.LoadScene("NewMenu");
 
         var newPositon = Person.transform.position;
         ActionPoints -= (newPositon - personPosition).magnitude;
@@ -81,8 +84,7 @@ public class GameStateController : MonoBehaviour
             SetTeleportActive(true);
         }
         else if (GameState == "FightStartEnemyTurn") {
-            for (var i = 0; i < Enemies.Length; ++i)
-            {
+            for (var i = 0; i < Enemies.Length; ++i) {
                 var enemy = Enemies[i];
                 var enemyController = enemy.GetComponent<EnemyController>();
                 if (enemyController.GetActive())

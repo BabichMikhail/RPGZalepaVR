@@ -2064,7 +2064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionPoints: 100
-  Health: 100
+  Health: 15
   Bullets: 0
   GameState: 
   Enemies:
