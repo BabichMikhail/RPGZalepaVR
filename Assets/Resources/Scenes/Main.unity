@@ -8384,7 +8384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 10
   ActionPoints: 0
-  ActivationDistance: 5
+  ActivationDistance: 15
   AttackDistance: 2.3
   AttackPrice: 0.1
   AttackInterval: 1

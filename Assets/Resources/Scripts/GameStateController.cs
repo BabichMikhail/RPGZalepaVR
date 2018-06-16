@@ -18,6 +18,11 @@ public class GameStateController : MonoBehaviour
     private bool personInitialized = false;
     private int lastActiveEnemyIdxOffset = 0;
 
+    private void Awake()
+    {
+        Music.Instance = new Music();
+    }
+
     private void Start()
     {
         GameState = "Free";
@@ -31,6 +36,8 @@ public class GameStateController : MonoBehaviour
 
     void Update ()
     {
+        Music.Instance.Update();
+
         var newPositon = Person.transform.position;
         ActionPoints -= (newPositon - personPosition).magnitude;
         personPosition = newPositon;
