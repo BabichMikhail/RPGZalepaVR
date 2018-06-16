@@ -47,7 +47,7 @@ public class GameStateController : MonoBehaviour
             var enemy = Enemies[i];
             if (enemy != null) {
                 var enemyController = enemy.GetComponent<EnemyController>();
-                if (!enemyController.GetActive() && (enemy.transform.position - personPosition).sqrMagnitude < 1.0f)
+                if (!enemyController.GetActive() && (enemy.transform.position - personPosition).sqrMagnitude < enemyController.ActivationDistance)
                     enemyController.SetActive(true);
 
                 if (enemyController.GetActive()) {
