@@ -42,12 +42,14 @@ public class GameStateController : MonoBehaviour
 
         var foundActiveEnemy = false;
         var foundActiveEnemyWithActionPoints = false;
+        var flatPersonPosition = new Vector2(personPosition.x, personPosition.z);
         for (var i = 0; i < Enemies.Length; ++i) {
             int idx = (i + lastActiveEnemyIdxOffset) % Enemies.Length;
             var enemy = Enemies[i];
             if (enemy != null) {
                 var enemyController = enemy.GetComponent<EnemyController>();
-                if (!enemyController.GetActive() && (enemy.transform.position - personPosition).sqrMagnitude < enemyController.ActivationDistance)
+                var flatEnemyPosition = new Vector2(enemy.transform.position.x, enemy.transform.position.z);
+                if (!enemyController.GetActive() && (flatEnemyPosition - flatPersonPosition).sqrMagnitude < Mathf.Pow(enemyController.ActivationDistance, 2))
                     enemyController.SetActive(true);
 
                 if (enemyController.GetActive()) {
