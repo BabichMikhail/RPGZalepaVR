@@ -20,7 +20,7 @@ public class GameStateController : MonoBehaviour
 
     private void Start()
     {
-        
+        GameState = "Free";
     }
     
     private void SetTeleportActive(bool active)

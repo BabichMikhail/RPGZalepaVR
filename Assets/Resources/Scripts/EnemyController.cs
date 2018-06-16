@@ -28,6 +28,8 @@ public class EnemyController : MonoBehaviour
     {
         if (active) {
             var agent = GetComponent<NavMeshAgent>();
+            var animator = GetComponentInChildren<Animator>();
+            animator.enabled = ActionPoints > 0.0f;
             Debug.Log(DestinationObject.transform.position);
             var flatPosition = new Vector2(transform.position.x, transform.position.z);
             var flatDestinationPosition = new Vector2(DestinationObject.transform.position.x, DestinationObject.transform.position.z);
@@ -40,19 +42,26 @@ public class EnemyController : MonoBehaviour
             lastPosition = transform.position;
             ActionPoints = Mathf.Max(0.0f, ActionPoints);
 
+            animator.SetBool("Hit", false);
+            animator.SetBool("Walk", !canAttack);
             var now = Time.time;
             if (ActionPoints > 0.0f && canAttack && lastShotTime + AttackInterval <= now) {
                 GameState.GetComponent<GameStateController>().Health -= Damage;
                 lastShotTime = now;
+                animator.enabled = true;
                 ActionPoints -= AttackPrice;
-                Debug.Log("Attack");
+                animator.SetBool("Hit", true);
             }
+
+            ActionPoints = Mathf.Max(0.0f, ActionPoints);
+            
         }
 	}
 
     public void SetActive(bool newActive)
     {
         GetComponent<NavMeshAgent>().enabled = newActive;
+        GetComponentInChildren<Animator>().enabled = newActive;
         active = newActive;
     }
 
