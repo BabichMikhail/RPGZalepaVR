@@ -93,7 +93,5 @@ public class GameStateController : MonoBehaviour
         }
         else if (GameState == "Free")
             SetTeleportActive(true);
-
-
     }    
 }
