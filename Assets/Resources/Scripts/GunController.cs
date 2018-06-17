@@ -21,5 +21,15 @@ public class GunController : MonoBehaviour
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100000, Color.red, 2.0f);
             Debug.Log("Did not Hit");
         }
+
+        var projectileController = GetComponentInChildren<AmmunitionController>();
+        if (projectileController != null)
+            --projectileController.ProjectilesLeft;
+    }
+
+    public int GetCurrentProjecttileCount()
+    {
+        var projectileController = GetComponentInChildren<AmmunitionController>();
+        return projectileController == null ? 0 : projectileController.ProjectilesLeft;
     }
 }

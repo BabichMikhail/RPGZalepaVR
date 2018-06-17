@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using VRTK;
 
@@ -30,14 +28,14 @@ public class GameStateController : MonoBehaviour
     {
         GameState = "Free";
     }
-    
+
     private void SetTeleportActive(bool active)
     {
         for (var i = 0; i < Controllers.Length; ++i)
             Controllers[i].GetComponent<VRTK_Pointer>().enabled = active;
     }
 
-    void Update ()
+    void Update()
     {
         Music.Instance.Update();
         if (Health <= 0)
@@ -114,6 +112,8 @@ public class GameStateController : MonoBehaviour
             return;
         var gunController = gunObject.GetComponent<GunController>();
         Debug.Assert(gunController != null);
+        if (gunController.GetCurrentProjecttileCount() <= 0)
+            return;
         gunController.Fire();
         ActionPoints = Mathf.Max(ActionPoints - 0.5f, 0.0f);
     }
