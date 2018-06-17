@@ -99,8 +99,22 @@ public class GameStateController : MonoBehaviour
             SetTeleportActive(true);
     }
 
-    public void AddHealth(int additionalHealth)
+    public void UseFirstAidKit(GameObject firstAidKidObject)
     {
-        Health = Mathf.Min(Health + additionalHealth, MAX_HEALTH);
+        if (ActionPoints == 0.0f)
+            return;
+        ActionPoints = Mathf.Max(ActionPoints - 1.0f, 0.0f);
+        Health = Mathf.Min(Health + 100, MAX_HEALTH);
+        Destroy(firstAidKidObject, 0.5f);
+    }
+
+    public void UseGun(GameObject gunObject)
+    {
+        if (ActionPoints == 0.0f)
+            return;
+        var gunController = gunObject.GetComponent<GunController>();
+        Debug.Assert(gunController != null);
+        gunController.Fire();
+        ActionPoints = Mathf.Max(ActionPoints - 0.5f, 0.0f);
     }
 }

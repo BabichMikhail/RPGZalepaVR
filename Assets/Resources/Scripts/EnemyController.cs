@@ -14,18 +14,30 @@ public class EnemyController : MonoBehaviour
     public GameObject GameState;
 
     private bool active;
+    private bool enemyEnabled = true;
     private Vector3 lastPosition;
     private float lastShotTime = 0.0f;
 
     private void Start ()
     {
-
         SetActive(false);
         lastPosition = transform.position;
     }
 	
 	private void Update ()
     {
+        if (!enemyEnabled)
+            return;
+
+        if (Health == 0) {
+            enemyEnabled = false;
+
+            Destroy(gameObject, 5.0f);
+            var animator = GetComponentInChildren<Animator>();
+            animator.enabled = true;
+            animator.SetBool("Death", true);
+        }
+
         if (active) {
             var agent = GetComponent<NavMeshAgent>();
             var animator = GetComponentInChildren<Animator>();
@@ -54,7 +66,6 @@ public class EnemyController : MonoBehaviour
             }
 
             ActionPoints = Mathf.Max(0.0f, ActionPoints);
-            
         }
 	}
 
@@ -68,5 +79,10 @@ public class EnemyController : MonoBehaviour
     public bool GetActive()
     {
         return active;
+    }
+
+    public void AddDamage(int damage)
+    {
+        Health = Mathf.Max(Health - damage, 0);
     }
 }

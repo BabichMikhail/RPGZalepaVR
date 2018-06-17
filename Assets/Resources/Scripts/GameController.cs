@@ -24,11 +24,12 @@ public class GameController : MonoBehaviour
     public void OnUse(object sender, ControllerInteractionEventArgs e)
     {
         var grabbedObject = GetComponent<VRTK_InteractGrab>().GetGrabbedObject();
-
         Debug.Log(grabbedObject);
-        if (grabbedObject != null && grabbedObject.CompareTag("FirstAidKit")) {
-            GameState.GetComponent<GameStateController>().AddHealth(100);
-            Destroy(grabbedObject, 0.5f);
+        if (grabbedObject != null) {
+            if (grabbedObject.CompareTag("FirstAidKit"))
+                GameState.GetComponent<GameStateController>().UseFirstAidKit(grabbedObject);
+            else if (grabbedObject.CompareTag("Gun"))
+                GameState.GetComponent<GameStateController>().UseGun(grabbedObject);
         }
     }
 
