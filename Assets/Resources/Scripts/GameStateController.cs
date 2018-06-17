@@ -6,6 +6,8 @@ using VRTK;
 
 public class GameStateController : MonoBehaviour
 {
+    private const int MAX_HEALTH = 200;
+
     public float ActionPoints;
     public float Health;
     public float Bullets;
@@ -95,5 +97,10 @@ public class GameStateController : MonoBehaviour
         }
         else if (GameState == "Free")
             SetTeleportActive(true);
-    }    
+    }
+
+    public void AddHealth(int additionalHealth)
+    {
+        Health = Mathf.Min(Health + additionalHealth, MAX_HEALTH);
+    }
 }

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-class Music {
+class Music
+{
     public static Music Instance { get; set; }
 
     private float volume;

@@ -1,21 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using VRTK;
 
-public class GameController : MonoBehaviour
+public class FirstAidKitController : MonoBehaviour
 {
-    public GameObject GameState;
-
-    private Vector3 position;
-    private GameStateController gameStateController;
-
     private void Start()
     {
         var controllerEvents = GetComponent<VRTK_ControllerEvents>();
-        Debug.Assert(controllerEvents != null);
         controllerEvents.GripPressed += new ControllerInteractionEventHandler(OnGripPressed);
         controllerEvents.GripReleased += new ControllerInteractionEventHandler(OnGripReleased);
         controllerEvents.AliasUseOn += new ControllerInteractionEventHandler(OnUse); // TODO remove it;
-
+       
         Debug.Log("Initialized");
     }
 
@@ -23,22 +19,26 @@ public class GameController : MonoBehaviour
 
     public void OnUse(object sender, ControllerInteractionEventArgs e)
     {
-        var grabbedObject = GetComponent<VRTK_InteractGrab>().GetGrabbedObject();
+        //if (isGrabbActive)
+        //    Destroy((GameObject)sender, 0.1f);
 
-        Debug.Log(grabbedObject);
-        if (grabbedObject != null && grabbedObject.CompareTag("FirstAidKit")) {
-            GameState.GetComponent<GameStateController>().AddHealth(100);
-            Destroy(grabbedObject, 0.5f);
-        }
+        var grabbedObject = GetComponent<VRTK_InteractGrab>().GetGrabbedObject();
+        if (grabbedObject != null && grabbedObject.CompareTag("FirstAidKit"))
+
+            
+        
+        Debug.Log("USE");
     }
 
     public void OnGripPressed(object sender, ControllerInteractionEventArgs e)
     {
         isGrabbActive = true;
+        Debug.Log("START GRAB");
     }
 
     public void OnGripReleased(object sender, ControllerInteractionEventArgs e)
     {
         isGrabbActive = false;
+        Debug.Log("FINISH GRAB");
     }
 }
