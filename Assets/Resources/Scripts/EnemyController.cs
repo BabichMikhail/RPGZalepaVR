@@ -26,8 +26,11 @@ public class EnemyController : MonoBehaviour
 	
 	private void Update ()
     {
-        if (!enemyEnabled)
+        if (!enemyEnabled) {
+            var animator = GetComponentInChildren<Animator>();
+            animator.enabled = true;
             return;
+        }
 
         if (Health == 0) {
             enemyEnabled = false;

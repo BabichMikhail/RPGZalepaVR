@@ -27,7 +27,7 @@ public class GunController : MonoBehaviour
             --projectileController.ProjectilesLeft;
     }
 
-    public int GetCurrentProjecttileCount()
+    public int GetCurrentProjectileCount()
     {
         var projectileController = GetComponentInChildren<AmmunitionController>();
         return projectileController == null ? 0 : projectileController.ProjectilesLeft;

@@ -35,6 +35,11 @@ public class GameController : MonoBehaviour
 
     public void OnGripPressed(object sender, ControllerInteractionEventArgs e)
     {
+        var grabbedObject = GetComponent<VRTK_InteractGrab>().GetGrabbedObject();
+        Debug.Log(grabbedObject);
+        if (grabbedObject != null)
+            if (grabbedObject.CompareTag("Gun"))
+                GameState.GetComponent<GameStateController>().SetGun(grabbedObject);
         isGrabbActive = true;
     }
 

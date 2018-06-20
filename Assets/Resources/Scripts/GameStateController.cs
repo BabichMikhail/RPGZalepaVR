@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using VRTK;
+using UnityEngine.UI;
 
 public class GameStateController : MonoBehaviour
 {
@@ -8,16 +9,17 @@ public class GameStateController : MonoBehaviour
 
     public float ActionPoints;
     public float Health;
-    public float Bullets;
 
     public string GameState;
     public GameObject[] Enemies;
     public GameObject Person;
     public GameObject[] Controllers;
+    public GameObject PipboyTextObject;
 
     private Vector3 personPosition;
     private bool personInitialized = false;
     private int lastActiveEnemyIdxOffset = 0;
+    private GameObject lastGun;
 
     private void Awake()
     {
@@ -37,6 +39,16 @@ public class GameStateController : MonoBehaviour
 
     void Update()
     {
+        var projectileCount = 0;
+        if (lastGun != null)
+        {
+            var gunController = lastGun.GetComponent<GunController>();
+            Debug.Assert(gunController != null);
+            projectileCount = gunController.GetCurrentProjectileCount();
+        }
+        
+        PipboyTextObject.GetComponent<Text>().text = string.Format("Здоровье: {0}\nОчки действий: {1}\nПатроны: {2}", Health, (int)ActionPoints, projectileCount);
+    
         Music.Instance.Update();
         if (Health <= 0)
             SceneManager.LoadScene("NewMenu");
@@ -106,13 +118,18 @@ public class GameStateController : MonoBehaviour
         Destroy(firstAidKidObject, 0.5f);
     }
 
+    public void SetGun(GameObject gunObject)
+    {
+        lastGun = gunObject;
+    }
+
     public void UseGun(GameObject gunObject)
     {
         if (ActionPoints == 0.0f)
             return;
         var gunController = gunObject.GetComponent<GunController>();
         Debug.Assert(gunController != null);
-        if (gunController.GetCurrentProjecttileCount() <= 0)
+        if (gunController.GetCurrentProjectileCount() <= 0)
             return;
         gunController.Fire();
         ActionPoints = Mathf.Max(ActionPoints - 0.5f, 0.0f);
